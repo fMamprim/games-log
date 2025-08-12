@@ -474,7 +474,7 @@ export default function App() {
                 
                 <header className={`p-4 shadow-md ${currentTheme.header} sticky top-0 z-40`}>
                     <div className="container mx-auto flex flex-wrap justify-between items-center gap-4">
-                        <h1 className="text-2xl font-bold">Gamers' Log</h1>
+                        <h1 className="text-2xl font-bold">Games Log</h1>
                         <div className="flex items-center gap-2 overflow-x-auto pb-2">
                             {Object.entries(consoleThemes).map(([key, { name }]) => (
                                 <button
