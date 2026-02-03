@@ -10,6 +10,74 @@ const MasterSaveIcon = () => (
     </svg>
 );
 
+const StarIcon = ({ fillPercentage, size = 24, className = "" }) => {
+    return (
+        <div style={{ position: 'relative', width: size, height: size, display: 'inline-block' }} className={className}>
+            {/* Base (Empty) Star */}
+            <Star size={size} className="text-gray-600" />
+            
+            {/* Filled Overlay */}
+            <div style={{ 
+                position: 'absolute', 
+                top: 0, 
+                left: 0, 
+                width: `${fillPercentage}%`, 
+                overflow: 'hidden', 
+                pointerEvents: 'none' 
+            }}>
+                <Star size={size} className="text-yellow-400 fill-yellow-400" />
+            </div>
+        </div>
+    );
+};
+
+const StarRating = ({ rating, onChange, readOnly = false, size = 24 }) => {
+    const [hoverRating, setHoverRating] = useState(0);
+
+    const handleMouseMove = (e, index) => {
+        if (readOnly) return;
+        const { left, width } = e.currentTarget.getBoundingClientRect();
+        const percent = (e.clientX - left) / width;
+        const isHalf = percent < 0.5;
+        setHoverRating(index + (isHalf ? 0.5 : 1));
+    };
+
+    const handleMouseLeave = () => {
+        if (readOnly) return;
+        setHoverRating(0);
+    };
+
+    const handleClick = () => {
+        if (readOnly) return;
+        onChange(hoverRating);
+    };
+
+    return (
+        <div className="flex" onMouseLeave={handleMouseLeave}>
+            {[0, 1, 2, 3, 4].map((index) => {
+                const currentVal = hoverRating || rating;
+                let fill = 0;
+                if (currentVal >= index + 1) {
+                    fill = 100;
+                } else if (currentVal >= index + 0.5) {
+                    fill = 50;
+                }
+
+                return (
+                    <div 
+                        key={index} 
+                        onMouseMove={(e) => handleMouseMove(e, index)}
+                        onClick={handleClick}
+                        className={`${readOnly ? 'cursor-default' : 'cursor-pointer'} transition-transform hover:scale-110`}
+                    >
+                        <StarIcon fillPercentage={fill} size={size} />
+                    </div>
+                );
+            })}
+        </div>
+    );
+};
+
 // --- Temas e Estilos ---
 const consoleThemes = {
     all: { name: 'Todos', bg: 'bg-gray-800', text: 'text-white', accent: 'border-gray-400', header: 'bg-gray-900' },
@@ -56,6 +124,7 @@ const GameForm = ({ onSave, onCancel, initialData = null, preselectedConsole = '
     const [consoleType, setConsoleType] = useState(initialData?.console || preselectedConsole);
     const [completionLevel, setCompletionLevel] = useState(initialData?.completionLevel || 'jogado');
     const [imageUrl, setImageUrl] = useState(initialData?.imageUrl || '');
+    const [rating, setRating] = useState(initialData?.rating || 0);
     const [isUploading, setIsUploading] = useState(false);
 
     const handleFileChange = (e) => {
@@ -83,6 +152,7 @@ const GameForm = ({ onSave, onCancel, initialData = null, preselectedConsole = '
             console: consoleType,
             completionLevel,
             imageUrl,
+            rating,
             achievements: initialData?.achievements || [],
         });
     };
@@ -109,6 +179,12 @@ const GameForm = ({ onSave, onCancel, initialData = null, preselectedConsole = '
                         <option key={key} value={key}>{label}</option>
                     ))}
                 </select>
+            </div>
+            <div>
+                <label className="block mb-1 font-semibold">Avaliação</label>
+                <div className="bg-gray-700 p-2 rounded border border-gray-600 flex justify-center">
+                    <StarRating rating={rating} onChange={setRating} size={32} />
+                </div>
             </div>
             <div>
                 <label className="block mb-1 font-semibold">URL da Imagem</label>
@@ -195,7 +271,10 @@ const GameCard = ({ game, onSelect }) => {
             <img src={game.imageUrl || `https://placehold.co/600x400/2D3748/E2E8F0?text=${encodeURIComponent(game.name)}`} alt={game.name} className="w-full h-48 object-cover" onError={(e) => { e.target.onerror = null; e.target.src=`https://placehold.co/600x400/2D3748/E2E8F0?text=${encodeURIComponent(game.name)}`; }}/>
             <div className="p-4">
                 <h3 className="font-bold text-lg truncate text-white">{game.name}</h3>
-                <p className={`text-sm font-semibold text-${consoleThemes[game.console]?.text || 'gray-300'}`}>{consoleThemes[game.console]?.name}</p>
+                <div className="flex justify-between items-center">
+                    <p className={`text-sm font-semibold text-${consoleThemes[game.console]?.text || 'gray-300'}`}>{consoleThemes[game.console]?.name}</p>
+                    {game.rating > 0 && <StarRating rating={game.rating} readOnly size={16} />}
+                </div>
             </div>
             <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                 <span className="text-white font-bold text-lg">Ver Detalhes</span>
@@ -286,6 +365,15 @@ const GameDetails = ({ game, onBack, onEditGame, onDeleteGame, onUpdateGame }) =
                             <span className="font-bold text-white">{levelStyle.label}</span>
                         </div>
                     </div>
+                    
+                    <div className="mt-2 mb-6">
+                        <div className="flex items-center gap-2">
+                            <span className="font-semibold text-gray-300">Avaliação:</span>
+                            <StarRating rating={game.rating || 0} readOnly size={24} />
+                            <span className="text-sm text-gray-400">({game.rating || 0}/5)</span>
+                        </div>
+                    </div>
+
                     <div className="mt-6 flex gap-4">
                         <button onClick={() => onEditGame(game)} className="flex items-center gap-2 px-4 py-2 rounded bg-blue-600 hover:bg-blue-500 text-white"><Edit size={16}/> Editar Jogo</button>
                         <button onClick={() => onDeleteGame(game.id)} className="flex items-center gap-2 px-4 py-2 rounded bg-red-600 hover:bg-red-500 text-white"><Trash2 size={16}/> Apagar Jogo</button>
