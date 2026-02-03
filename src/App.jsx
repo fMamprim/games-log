@@ -15,15 +15,15 @@ const StarIcon = ({ fillPercentage, size = 24, className = "" }) => {
         <div style={{ position: 'relative', width: size, height: size, display: 'inline-block' }} className={className}>
             {/* Base (Empty) Star */}
             <Star size={size} className="text-gray-600" />
-            
+
             {/* Filled Overlay */}
-            <div style={{ 
-                position: 'absolute', 
-                top: 0, 
-                left: 0, 
-                width: `${fillPercentage}%`, 
-                overflow: 'hidden', 
-                pointerEvents: 'none' 
+            <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: `${fillPercentage}%`,
+                overflow: 'hidden',
+                pointerEvents: 'none'
             }}>
                 <Star size={size} className="text-yellow-400 fill-yellow-400" />
             </div>
@@ -64,8 +64,8 @@ const StarRating = ({ rating, onChange, readOnly = false, size = 24 }) => {
                 }
 
                 return (
-                    <div 
-                        key={index} 
+                    <div
+                        key={index}
                         onMouseMove={(e) => handleMouseMove(e, index)}
                         onClick={handleClick}
                         className={`${readOnly ? 'cursor-default' : 'cursor-pointer'} transition-transform hover:scale-110`}
@@ -268,7 +268,7 @@ const GameCard = ({ game, onSelect }) => {
             <div className="absolute top-2 right-2 z-10 p-2 bg-black bg-opacity-50 rounded-full" title={levelStyle.label}>
                 {levelStyle.icon}
             </div>
-            <img src={game.imageUrl || `https://placehold.co/600x400/2D3748/E2E8F0?text=${encodeURIComponent(game.name)}`} alt={game.name} className="w-full h-48 object-cover" onError={(e) => { e.target.onerror = null; e.target.src=`https://placehold.co/600x400/2D3748/E2E8F0?text=${encodeURIComponent(game.name)}`; }}/>
+            <img src={game.imageUrl || `https://placehold.co/600x400/2D3748/E2E8F0?text=${encodeURIComponent(game.name)}`} alt={game.name} className="w-full h-48 object-cover" onError={(e) => { e.target.onerror = null; e.target.src = `https://placehold.co/600x400/2D3748/E2E8F0?text=${encodeURIComponent(game.name)}`; }} />
             <div className="p-4">
                 <h3 className="font-bold text-lg truncate text-white">{game.name}</h3>
                 <div className="flex justify-between items-center">
@@ -295,7 +295,7 @@ const GameDetails = ({ game, onBack, onEditGame, onDeleteGame, onUpdateGame }) =
             />
         );
     };
-    
+
     const handleEditAchievement = (ach) => {
         setModalContent(
             <AchievementForm
@@ -321,7 +321,7 @@ const GameDetails = ({ game, onBack, onEditGame, onDeleteGame, onUpdateGame }) =
         const updatedAchievements = game.achievements.filter(ach => ach.id !== achievementId);
         onUpdateGame({ ...game, achievements: updatedAchievements });
     };
-    
+
     const levelStyle = completionLevels[game.completionLevel];
     const theme = consoleThemes[game.console];
 
@@ -351,7 +351,7 @@ const GameDetails = ({ game, onBack, onEditGame, onDeleteGame, onUpdateGame }) =
             <div className="flex flex-col md:flex-row gap-8">
                 <div className="md:w-1/3">
                     <div className={imageWrapperClasses}>
-                        <img src={game.imageUrl || `https://placehold.co/600x800/2D3748/E2E8F0?text=${encodeURIComponent(game.name)}`} alt={game.name} className="w-full rounded-lg" onError={(e) => { e.target.onerror = null; e.target.src=`https://placehold.co/600x800/2D3748/E2E8F0?text=${encodeURIComponent(game.name)}`; }}/>
+                        <img src={game.imageUrl || `https://placehold.co/600x800/2D3748/E2E8F0?text=${encodeURIComponent(game.name)}`} alt={game.name} className="w-full rounded-lg" onError={(e) => { e.target.onerror = null; e.target.src = `https://placehold.co/600x800/2D3748/E2E8F0?text=${encodeURIComponent(game.name)}`; }} />
                     </div>
                 </div>
                 <div className="md:w-2/3">
@@ -365,7 +365,7 @@ const GameDetails = ({ game, onBack, onEditGame, onDeleteGame, onUpdateGame }) =
                             <span className="font-bold text-white">{levelStyle.label}</span>
                         </div>
                     </div>
-                    
+
                     <div className="mt-2 mb-6">
                         <div className="flex items-center gap-2">
                             <span className="font-semibold text-gray-300">Avaliação:</span>
@@ -375,14 +375,14 @@ const GameDetails = ({ game, onBack, onEditGame, onDeleteGame, onUpdateGame }) =
                     </div>
 
                     <div className="mt-6 flex gap-4">
-                        <button onClick={() => onEditGame(game)} className="flex items-center gap-2 px-4 py-2 rounded bg-blue-600 hover:bg-blue-500 text-white"><Edit size={16}/> Editar Jogo</button>
-                        <button onClick={() => onDeleteGame(game.id)} className="flex items-center gap-2 px-4 py-2 rounded bg-red-600 hover:bg-red-500 text-white"><Trash2 size={16}/> Apagar Jogo</button>
+                        <button onClick={() => onEditGame(game)} className="flex items-center gap-2 px-4 py-2 rounded bg-blue-600 hover:bg-blue-500 text-white"><Edit size={16} /> Editar Jogo</button>
+                        <button onClick={() => onDeleteGame(game.id)} className="flex items-center gap-2 px-4 py-2 rounded bg-red-600 hover:bg-red-500 text-white"><Trash2 size={16} /> Apagar Jogo</button>
                     </div>
-                    
+
                     <div className="mt-10">
                         <div className="flex justify-between items-center mb-4">
                             <h2 className="text-2xl font-bold">Conquistas</h2>
-                            <button onClick={handleAddAchievement} className="flex items-center gap-2 px-4 py-2 rounded bg-green-600 hover:bg-green-500 text-white"><Plus size={16}/> Adicionar</button>
+                            <button onClick={handleAddAchievement} className="flex items-center gap-2 px-4 py-2 rounded bg-green-600 hover:bg-green-500 text-white"><Plus size={16} /> Adicionar</button>
                         </div>
                         <div className="space-y-4">
                             {(game.achievements || []).length > 0 ? (
@@ -394,8 +394,8 @@ const GameDetails = ({ game, onBack, onEditGame, onDeleteGame, onUpdateGame }) =
                                             <p className="text-sm opacity-80">{ach.description}</p>
                                         </div>
                                         <div className="flex gap-2">
-                                            <button onClick={() => handleEditAchievement(ach)} className="text-gray-400 hover:text-white"><Edit size={16}/></button>
-                                            <button onClick={() => handleDeleteAchievement(ach.id)} className="text-gray-400 hover:text-red-500"><Trash2 size={16}/></button>
+                                            <button onClick={() => handleEditAchievement(ach)} className="text-gray-400 hover:text-white"><Edit size={16} /></button>
+                                            <button onClick={() => handleDeleteAchievement(ach.id)} className="text-gray-400 hover:text-red-500"><Trash2 size={16} /></button>
                                         </div>
                                     </div>
                                 ))
@@ -426,6 +426,7 @@ export default function App() {
 
     const [filterConsole, setFilterConsole] = useState('all');
     const [completionFilter, setCompletionFilter] = useState('all');
+    const [sortOption, setSortOption] = useState('status'); // 'status', 'name', 'rating'
     const [selectedGame, setSelectedGame] = useState(null);
     const [modalContent, setModalContent] = useState(null);
 
@@ -457,7 +458,7 @@ export default function App() {
         setGames(prevGames => prevGames.filter(g => g.id !== gameId));
         setSelectedGame(null); // Volta para a lista após a exclusão
     };
-    
+
     const handleUpdateGame = (updatedGame) => {
         const updatedGames = games.map(g => g.id === updatedGame.id ? updatedGame : g);
         setGames(updatedGames);
@@ -510,9 +511,9 @@ export default function App() {
     const openAddGameModal = () => {
         const consoleToPreselect = filterConsole !== 'all' ? filterConsole : 'pc';
         setModalContent(
-            <GameForm 
-                onSave={handleSaveGame} 
-                onCancel={() => setModalContent(null)} 
+            <GameForm
+                onSave={handleSaveGame}
+                onCancel={() => setModalContent(null)}
                 preselectedConsole={consoleToPreselect}
             />
         );
@@ -523,7 +524,7 @@ export default function App() {
     };
 
     const filteredGames = useMemo(() => {
-        let tempGames = games;
+        let tempGames = [...games]; // Clone array to avoid mutating state during sort
 
         // 1. Filtro por console
         if (filterConsole !== 'all') {
@@ -535,8 +536,35 @@ export default function App() {
             tempGames = tempGames.filter(game => game.completionLevel === completionFilter);
         }
 
+        // 3. Ordenação
+        const statusWeights = {
+            mastersave: 4,
+            '100%': 3,
+            zerado: 2,
+            jogado: 1
+        };
+
+        tempGames.sort((a, b) => {
+            if (sortOption === 'status') {
+                const weightA = statusWeights[a.completionLevel] || 0;
+                const weightB = statusWeights[b.completionLevel] || 0;
+                // Se status igual, desempata por nome
+                if (weightB !== weightA) return weightB - weightA;
+                return a.name.localeCompare(b.name);
+            } else if (sortOption === 'name') {
+                return a.name.localeCompare(b.name);
+            } else if (sortOption === 'rating') {
+                const ratingA = a.rating || 0;
+                const ratingB = b.rating || 0;
+                // Se nota igual, desempata por nome
+                if (ratingB !== ratingA) return ratingB - ratingA;
+                return a.name.localeCompare(b.name);
+            }
+            return 0;
+        });
+
         return tempGames;
-    }, [games, filterConsole, completionFilter]);
+    }, [games, filterConsole, completionFilter, sortOption]);
 
     const currentTheme = consoleThemes[filterConsole];
 
@@ -559,7 +587,7 @@ export default function App() {
 
             <div className={`min-h-screen ${currentTheme.bg} ${currentTheme.text} transition-colors duration-500`}>
                 {modalContent && <Modal onClose={() => setModalContent(null)}>{modalContent}</Modal>}
-                
+
                 <header className={`p-4 shadow-md ${currentTheme.header} sticky top-0 z-40`}>
                     <div className="container mx-auto flex flex-wrap justify-between items-center gap-4">
                         <h1 className="text-2xl font-bold">Games Log</h1>
@@ -579,8 +607,8 @@ export default function App() {
 
                 <main className="container mx-auto p-4 md:p-8">
                     {selectedGame ? (
-                        <GameDetails 
-                            game={selectedGame} 
+                        <GameDetails
+                            game={selectedGame}
                             onBack={() => setSelectedGame(null)}
                             onEditGame={openEditGameModal}
                             onDeleteGame={handleDeleteGame}
@@ -590,7 +618,20 @@ export default function App() {
                         <>
                             <div className="flex flex-wrap gap-4 justify-between items-center mb-8">
                                 <h2 className="text-3xl font-bold">Meus Jogos ({filteredGames.length})</h2>
-                                <div className="flex gap-2 flex-wrap">
+                                <div className="flex gap-2 flex-wrap items-center">
+                                    <div className="flex items-center bg-gray-700 rounded-lg px-3 py-2 mr-2">
+                                        <span className="text-sm font-semibold mr-2 text-gray-300">Ordenar por:</span>
+                                        <select
+                                            value={sortOption}
+                                            onChange={(e) => setSortOption(e.target.value)}
+                                            className="bg-transparent text-white font-bold focus:outline-none cursor-pointer"
+                                        >
+                                            <option value="status" className="bg-gray-800">Melhor Status</option>
+                                            <option value="name" className="bg-gray-800">Nome (A-Z)</option>
+                                            <option value="rating" className="bg-gray-800">Maior Nota</option>
+                                        </select>
+                                    </div>
+
                                     <button onClick={handleExport} className="flex items-center gap-2 bg-gray-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors">
                                         <Download size={20} /> Exportar
                                     </button>
