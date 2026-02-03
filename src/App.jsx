@@ -556,8 +556,16 @@ export default function App() {
             } else if (sortOption === 'rating') {
                 const ratingA = a.rating || 0;
                 const ratingB = b.rating || 0;
-                // Se nota igual, desempata por nome
+
+                // 1. Nota (Maior para menor)
                 if (ratingB !== ratingA) return ratingB - ratingA;
+
+                // 2. Status (Melhor para pior)
+                const weightA = statusWeights[a.completionLevel] || 0;
+                const weightB = statusWeights[b.completionLevel] || 0;
+                if (weightB !== weightA) return weightB - weightA;
+
+                // 3. Nome (A-Z)
                 return a.name.localeCompare(b.name);
             }
             return 0;
