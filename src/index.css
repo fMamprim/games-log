@@ -1,3 +1,90 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-slate-950 text-slate-100 antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+/* Animações especiais gamer */
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(250, 204, 21, 0.4), 0 0 20px rgba(234, 179, 8, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(250, 204, 21, 0.7), 0 0 35px rgba(234, 179, 8, 0.5);
+  }
+}
+.animate-glow {
+  animation: glow 2.5s ease-in-out infinite;
+}
+
+@keyframes fire-flicker {
+  0% {
+    box-shadow: 0 0 8px #ef4444, 0 0 18px #dc2626, inset 0 0 6px #f87171;
+  }
+  50% {
+    box-shadow: 0 0 16px #f97316, 0 0 28px #ef4444, inset 0 0 10px #f87171;
+  }
+  100% {
+    box-shadow: 0 0 8px #ef4444, 0 0 18px #dc2626, inset 0 0 6px #f87171;
+  }
+}
+.animate-fire {
+  animation: fire-flicker 1.8s ease-in-out infinite;
+}
+
+@keyframes gold-shine {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(234, 179, 8, 0.4), 0 0 30px rgba(234, 179, 8, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(234, 179, 8, 0.7), 0 0 45px rgba(234, 179, 8, 0.4);
+  }
+}
+.animate-gold {
+  animation: gold-shine 3s ease-in-out infinite;
+}
+
+@keyframes silver-shine {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(203, 213, 225, 0.35), 0 0 24px rgba(148, 163, 184, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(203, 213, 225, 0.6), 0 0 35px rgba(148, 163, 184, 0.35);
+  }
+}
+.animate-silver {
+  animation: silver-shine 3s ease-in-out infinite;
+}
+
+@keyframes bronze-shine {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(217, 119, 6, 0.35), 0 0 24px rgba(180, 83, 9, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(217, 119, 6, 0.6), 0 0 35px rgba(180, 83, 9, 0.35);
+  }
+}
+.animate-bronze {
+  animation: bronze-shine 3s ease-in-out infinite;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.7);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.5);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.8);
+}
